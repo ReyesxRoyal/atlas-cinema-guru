@@ -1,27 +1,20 @@
-import FilmDisplay from "@/components/filmDisplay";
-import FilmImage from "@/components/filmImage";
-import SearchField from "@/components/searchField";
-import { fetchGenres } from "@/lib/data";
+"use client";
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    page?: string;
-    minYear?: string;
-    maxYear?: string;
-    query?: string;
-    genres?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  let genres: string[] = searchParams?.genres?.split(",")!! || await fetchGenres();
-  const currentPage = searchParams?.page || "1";
-  const minYear = searchParams?.minYear || "0";
-  const maxYear = searchParams?.maxYear || String(new Date().getFullYear());
-  const query = searchParams?.query || "";
-  return (
-    <div className="flex flex-wrap items-center justify-center min-h-screen h-full w-full">
-      <SearchField />
-      <FilmDisplay page={currentPage} minYear={minYear} maxYear={maxYear} query={query} genres={genres} />
-    </div>
-  );
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
+export default function Home() {
+  const router = useRouter();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/dashboard");
+    } else if (status === "unauthenticated") {
+      router.replace("/login");
+    }
+  }, [status, router]);
+
+  return <div className="p-8">Redirecting...</div>;
 }
