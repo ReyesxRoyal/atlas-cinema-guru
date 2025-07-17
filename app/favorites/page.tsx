@@ -1,7 +1,7 @@
-import FavoritesDisplay from "@/app/components/favoritesDisplay";
-import FilmDisplay from "@/app/components/filmDisplay";
-import FilmImage from "@/app/components/filmImage";
-import SearchField from "@/app/components/searchField";
+import FavoritesDisplay from "@/components/favoritesDisplay";
+import FilmDisplay from "@/components/filmDisplay";
+import FilmImage from "@/components/filmImage";
+import SearchField from "@/components/searchField";
 import { fetchGenres } from "@/lib/data";
 
 export default async function Page(props: {
